@@ -10,7 +10,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-public class game extends Application {
+public class BlackjackView extends Application {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
@@ -21,7 +21,7 @@ public class game extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		primaryStage.setTitle("Project 2");
+		primaryStage.setTitle("Blackjack");
 		//initialize features of the window
 		Button b1 = new Button("button 1");
 		Button b2 = new Button("button 2");
