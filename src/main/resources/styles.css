@@ -13,6 +13,7 @@
     -fx-text-fill: #1C0F13;
     -fx-min-width: 100px;
     -fx-min-height: 50px;
+    -fx-padding: 0px 0px;
 }
 
 .titleButtons:hover {

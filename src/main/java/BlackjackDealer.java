@@ -13,7 +13,7 @@ public class BlackjackDealer{
         }
         deck = new ArrayList<>();
 
-        String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
+        String[] suits = {"hearts", "diamonds", "clubs", "spades"};
         int[] values = {1,2,3,4,5,6,7,8,9,10,11,12,13}; //1 = ace, 11 = jack, 12 = queen, 13 = king, rest are normal values
 
         for(String suit:suits){ //double for loop that will combine each value with each suit

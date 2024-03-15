@@ -22,24 +22,24 @@ public class BlackjackView extends Application {
 		primaryStage.setTitle("BLACKJACK");
 		//initialize features of the window
 
-		Button start = new Button("Start");
-		Button quit = new Button("Quit");
+		Button start = new Button("START");
+		Button quit = new Button("QUIT");
 
-		start.getStyleClass().add("titleButtons");
-		quit.getStyleClass().add("titleButtons");
+		start.getStyleClass().add("titleButtons"); //begins the game when clicked
+		quit.getStyleClass().add("titleButtons"); //quits the game when clicked
 
 		TextField title = new TextField("BLACKJACK");
 		title.setEditable(false);
 		title.getStyleClass().add("title");
 		title.setFocusTraversable(false);
 
-		VBox v1 = new VBox(20, title, start, quit);
-		HBox h1 = new HBox(10, v1);
+		VBox v1 = new VBox(30, title, start, quit);
+		HBox h1 = new HBox(20, v1);
 
 		v1.setAlignment(Pos.CENTER);
 		h1.setAlignment(Pos.CENTER);
-		//setting font and font size
-		h1.setStyle("-fx-font-family: 'Comic Sans MS'");
+		//setting font
+		h1.setStyle("-fx-font-family: 'sans-serif'");
 		
 		BorderPane pane = new BorderPane();
 		pane.setCenter(h1);
