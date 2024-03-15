@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class BlackjackDealer{
-    private ArrayList<Card> deck; //where all the cards will be, index 0 being the top of the deck, and the last index being the bottom of the deck
+    public ArrayList<Card> deck; //where all the cards will be, index 0 being the top of the deck, and the last index being the bottom of the deck
     public BlackjackDealer(){ //constructor for BlackjackDealer - generates the deck and shuffles it
         generateDeck();
         shuffleDeck();

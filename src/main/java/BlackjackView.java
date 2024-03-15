@@ -136,15 +136,19 @@ public class BlackjackView extends Application {
 				hit.setDisable(false);
 				stand.setDisable(false);
 				hit.setOnAction(eventhit -> {
-					game.hitCard();
-					String anothercard = game.playerHand.get(2).cardName();
-					ImageView showcard = new ImageView(new Image(anothercard));
-					showcard.setPreserveRatio(true);
-					showcard.setFitWidth(100);
-					VBox board = new VBox(firstgame(pane,game));
-					HBox newboard = new HBox(board, showcard);
-					pane.setCenter(newboard);
-					BorderPane.setAlignment(newboard, Pos.CENTER);
+					int i = 2;
+					while (!game.checkPlayerBust()) {
+						game.hitCard();
+						String anothercard = game.playerHand.get(i).cardName();
+						ImageView showcard = new ImageView(new Image(anothercard));
+						showcard.setPreserveRatio(true);
+						showcard.setFitWidth(100);
+						VBox board = new VBox(firstgame(pane, game));
+						HBox newboard = new HBox(board, showcard);
+						pane.setCenter(newboard);
+						BorderPane.setAlignment(newboard, Pos.CENTER);
+						i++;
+					}
 				});
 				stand.setOnAction(eventhit -> {
 

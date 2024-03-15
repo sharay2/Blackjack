@@ -25,6 +25,9 @@ public class BlackjackGameLogic {
             if(card.value == 1){
                 numAces++;
             }
+            else if(card.value>10){
+                total += 10;
+            }
             else {
                 total += card.value;
             }
@@ -47,6 +50,9 @@ public class BlackjackGameLogic {
         for(Card card:hand){
             if(card.value == 1){
                 numAces++;
+            }
+            else if(card.value > 10){
+                dealerSum += 10;
             }
             else {
                 dealerSum += card.value;
