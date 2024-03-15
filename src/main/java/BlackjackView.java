@@ -72,8 +72,9 @@ public class BlackjackView extends Application {
 		// Create an empty layout for the new scene
 		VBox newSceneLayout = new VBox();
 
-
 		// Create the new scene\
+		BlackjackGame game = new BlackjackGame();
+		game.hitCard();
 		ImageView cardcover = new ImageView(new Image("cardcover.jpg"));
 		ImageView card = new ImageView(new Image("1clubs.jpg"));
 		cardcover.setPreserveRatio(true);
