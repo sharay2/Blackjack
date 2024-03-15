@@ -73,8 +73,25 @@ public class BlackjackView extends Application {
 		VBox newSceneLayout = new VBox();
 
 
-		// Create the new scene
-		Scene newScene = new Scene(newSceneLayout, 900, 700);
+		// Create the new scene\
+		ImageView cardcover = new ImageView(new Image("cardcover.jpg"));
+		ImageView card = new ImageView(new Image("1clubs.jpg"));
+		cardcover.setPreserveRatio(true);
+		card.setPreserveRatio(true);
+
+		cardcover.setPreserveRatio(true);
+		card.setPreserveRatio(true);
+
+		cardcover.setFitWidth(100);
+		card.setFitWidth(100);
+
+		HBox dealerCardView = new HBox(10, card, cardcover);
+
+		BorderPane pane = new BorderPane();
+		pane.setCenter(dealerCardView);
+		BorderPane.setAlignment(dealerCardView,Pos.CENTER);
+
+		Scene newScene = new Scene(pane, 900, 700);
 		newScene.getRoot().getStyleClass().add("background");
 		newScene.getStylesheets().add(css);
 
