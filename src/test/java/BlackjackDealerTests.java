@@ -53,7 +53,17 @@ class BlackjackDealerTests {
 
 		assertNotNull(myCards,"dealHand/drawOne: Incorrect behavior when dealing hands, no cards being returned");
 		assertEquals(myCards.size(), 3, "dealHand/drawOne: Incorrect behavior when dealing hands and drawing one, player cards not grabbing cards correctly");
-		assertEquals(dealer.deckSize(), 49, "dealHand/drawOne: Incorrect behavior when dealing hands, card is not correctly removed from deck");
+		assertEquals(dealer.deckSize(), 49, "dealHand/drawOne: Incorrect behavior when dealing hands, cards are not correctly removed from deck");
+	}
+	@Test
+	void dealHandTwice(){
+		BlackjackDealer dealer = new BlackjackDealer();
+		ArrayList<Card> myCards = dealer.dealHand();
+		ArrayList<Card> theirCards = dealer.dealHand();
+
+		assertNotNull(myCards,"dealHandTwice: Incorrect behavior when dealing hands once, no cards being returned");
+		assertNotNull(theirCards,"dealHandTwice: Incorrect behavior when dealing hands twice, no cards being returned");
+		assertEquals(dealer.deckSize(), 48, "dealHandTwice: Incorrect behavior when dealing hands twice, cards are not correctly removed from deck");
 	}
 	//------END OF TESTS FOR dealHand() AND drawOne()------
 }
