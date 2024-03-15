@@ -23,3 +23,11 @@
 .background{
     -fx-background-color: #B7CECE;
 }
+
+.moneybox{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: top-left;
+    -fx-text-fill: #1C0F13;
+    -fx-font-size: 24;
+}

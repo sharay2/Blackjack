@@ -7,7 +7,7 @@ public class Card {
         value = theValue;
     }
 
-    public String cardName(Card card){
-        return card.value + card.suit;
+    public String cardName(){
+        return this.value + this.suit + ".jpg";
     }
 }

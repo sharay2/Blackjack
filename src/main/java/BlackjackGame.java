@@ -1,11 +1,12 @@
 import java.util.ArrayList;
 public class BlackjackGame{
-    public ArrayList<Card> playerHand;
-    public ArrayList<Card> bankerHand;
-    public final BlackjackDealer theDealer;
-    public final BlackjackGameLogic gameLogic;
-    private double currentBet;
-    private double totalWinnings;
+    ArrayList<Card> playerHand;
+    ArrayList<Card> bankerHand;
+    public BlackjackDealer theDealer;
+    public BlackjackGameLogic gameLogic;
+    double currentBet;
+    double money;
+    double totalWinnings;
     BlackjackGame(){
         currentBet = 0.0;
         totalWinnings = 0.0;

@@ -13,7 +13,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class BlackjackView extends Application {
-	String css = getClass().getResource("styles.css").toExternalForm(); //since multiple scenes will be referencing from the .css file, this is left here
+	String css = getClass().getResource("styles.css").toExternalForm();
+
+	double money;//since multiple scenes will be referencing from the .css file, this is left here
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
@@ -62,35 +64,31 @@ public class BlackjackView extends Application {
 		primaryStage.setScene(titlescene);
 		primaryStage.show();
 
-		start.setOnAction(e -> openNewScene(primaryStage));
+		start.setOnAction(e -> moneyScene(primaryStage));
 		quit.setOnAction(e->{
 			primaryStage.close();
 		});
 	}
 
-	public void openNewScene(Stage primaryStage) {
-		// Create an empty layout for the new scene
-		VBox newSceneLayout = new VBox();
+	public void moneyScene(Stage primaryStage) {
 
-		// Create the new scene\
-		BlackjackGame game = new BlackjackGame();
-		game.hitCard();
-		ImageView cardcover = new ImageView(new Image("cardcover.jpg"));
-		ImageView card = new ImageView(new Image("1clubs.jpg"));
-		cardcover.setPreserveRatio(true);
-		card.setPreserveRatio(true);
+		Button entermoney = new Button("ENTER MONEY");
+		TextField mymoney = new TextField(); // current money input
 
-		cardcover.setPreserveRatio(true);
-		card.setPreserveRatio(true);
+		VBox game = new VBox(mymoney, entermoney);
+		mymoney.setPromptText("Enter current money");
 
-		cardcover.setFitWidth(100);
-		card.setFitWidth(100);
-
-		HBox dealerCardView = new HBox(10, card, cardcover);
+		mymoney.setAlignment(Pos.CENTER);
+		entermoney.setAlignment(Pos.CENTER);
 
 		BorderPane pane = new BorderPane();
-		pane.setCenter(dealerCardView);
-		BorderPane.setAlignment(dealerCardView,Pos.CENTER);
+		pane.setCenter(game);
+
+		entermoney.setOnAction(e -> {
+			money = Double.parseDouble(mymoney.getText());
+			openNewScene(primaryStage, money);
+		}
+		);
 
 		Scene newScene = new Scene(pane, 900, 700);
 		newScene.getRoot().getStyleClass().add("background");
@@ -98,6 +96,134 @@ public class BlackjackView extends Application {
 
 		// Set the new scene to the stage
 		primaryStage.setScene(newScene);
+	}
+
+	public void openNewScene(Stage primaryStage, double money) {
+		// Create an empty layout for the new scene
+
+		BlackjackGame game = new BlackjackGame();
+		BorderPane pane = new BorderPane();
+
+		game.money = money;
+
+		TextField textmoney = new TextField(String.format("$%.2f", game.money));
+		textmoney.setEditable(false);
+		textmoney.getStyleClass().add("moneybox"); //begins the game when clicked
+
+
+		TextField betinput = new TextField(); // bet money input
+
+		betinput.setPromptText("Enter a bet");
+		betinput.setMaxWidth(100);
+
+		Button bet = new Button("BET");
+		Button hit = new Button("HIT");
+		Button stand = new Button("STAND");
+
+		hit.setDisable(true);
+		stand.setDisable(true);
+
+		VBox directions = new VBox(betinput, bet, hit, stand, textmoney);
+
+		bet.setOnAction(event -> { // bet button clicked, set bet
+			try {
+				game.currentBet = Double.parseDouble(betinput.getText()); // convert bet money input to double
+				betinput.setEditable(false);
+				bet.setDisable(true);
+				betinput.clear();
+				betinput.setPromptText("");
+				firstgame(pane, game);
+				hit.setDisable(false);
+				stand.setDisable(false);
+				hit.setOnAction(eventhit -> {
+					game.hitCard();
+					String anothercard = game.playerHand.get(2).cardName();
+					ImageView showcard = new ImageView(new Image(anothercard));
+					showcard.setPreserveRatio(true);
+					showcard.setFitWidth(100);
+					VBox board = new VBox(firstgame(pane,game));
+					HBox newboard = new HBox(board, showcard);
+					pane.setCenter(newboard);
+					BorderPane.setAlignment(newboard, Pos.CENTER);
+				});
+				stand.setOnAction(eventhit -> {
+
+				});
+			}
+			catch (NumberFormatException e){
+				betinput.setText("Enter correct bet!");
+				betinput.setText("Enter correct money!");
+			}
+		});
+
+
+
+		directions.setAlignment(Pos.CENTER_RIGHT);
+		HBox directionsWrapper = new HBox(directions);
+		directionsWrapper.setPadding(new Insets(0, 20, 0, 0));
+
+		VBox.setMargin(hit, new Insets(20, 70, 20, 0)); // Insets(top, right, bottom, left)
+		VBox.setMargin(stand, new Insets(0, 70, 20, 0));
+		VBox.setMargin(bet, new Insets(0, 70, 20, 0));
+
+
+		// DISPLAY CARDS VVVV
+//		public void firstgame(){
+//
+//		}
+
+
+		// DISPLAY CARDS ^^^^
+
+		pane.setRight(directionsWrapper);
+
+		Scene newScene = new Scene(pane, 900, 700);
+		newScene.getRoot().getStyleClass().add("background");
+		newScene.getStylesheets().add(css);
+
+		// Set the new scene to the stage
+		primaryStage.setScene(newScene);
+	}
+
+	public VBox firstgame(BorderPane pane, BlackjackGame game) {
+		String firstplayercard = game.playerHand.get(0).cardName();
+		String secondplayercard = game.playerHand.get(1).cardName();
+		String firstbankercard = game.bankerHand.get(0).cardName(); // banker card
+
+		ImageView show1playercard = new ImageView(new Image(firstplayercard));
+		ImageView show2playercard = new ImageView(new Image(secondplayercard));
+		ImageView dealercardcover = new ImageView(new Image("cardcover.jpg"));
+		ImageView show1bankercard = new ImageView(new Image(firstbankercard));
+
+		show1playercard.setPreserveRatio(true);
+		show2playercard.setPreserveRatio(true);
+		dealercardcover.setPreserveRatio(true);
+		show1bankercard.setPreserveRatio(true);
+
+		dealercardcover.setFitWidth(100);
+		show1bankercard.setFitWidth(100);
+		show1playercard.setFitWidth(100);
+		show2playercard.setFitWidth(100);
+
+		HBox dealerCardView = new HBox(10, show1bankercard, dealercardcover);
+		HBox playerCardView = new HBox(10, show1playercard, show2playercard);
+		VBox dealerplayerView = new VBox(50, dealerCardView, playerCardView);
+
+		pane.setCenter(dealerplayerView);
+		BorderPane.setAlignment(dealerplayerView, Pos.CENTER);
+
+		return dealerplayerView;
+	}
+
+	public void hitcard(BorderPane pane, BlackjackGame game) {
+
+
+
+
+
+
+
+
 	}
 
 }
