@@ -6,4 +6,8 @@ public class Card {
         suit = theSuit;
         value = theValue;
     }
+
+    public String cardName(Card card){
+        return card.value + card.suit;
+    }
 }
