@@ -50,11 +50,11 @@ public class BlackjackView extends Application {
 		h1.setAlignment(Pos.CENTER);
 		//setting font
 		h1.setStyle("-fx-font-family: 'sans-serif'");
-		
+
 		BorderPane pane = new BorderPane();
 		pane.setCenter(h1);
 		pane.setBottom(iconPane);
-				
+
 		Scene titlescene = new Scene(pane, 900,700);
 		titlescene.getRoot().getStyleClass().add("background");
 		titlescene.getStylesheets().add(css);
@@ -62,12 +62,24 @@ public class BlackjackView extends Application {
 		primaryStage.setScene(titlescene);
 		primaryStage.show();
 
-		start.setOnAction(e->{
-
-		});
+		start.setOnAction(e -> openNewScene(primaryStage));
 		quit.setOnAction(e->{
 			primaryStage.close();
 		});
+	}
+
+	public void openNewScene(Stage primaryStage) {
+		// Create an empty layout for the new scene
+		VBox newSceneLayout = new VBox();
+
+
+		// Create the new scene
+		Scene newScene = new Scene(newSceneLayout, 900, 700);
+		newScene.getRoot().getStyleClass().add("background");
+		newScene.getStylesheets().add(css);
+
+		// Set the new scene to the stage
+		primaryStage.setScene(newScene);
 	}
 
 }
