@@ -1,6 +1,4 @@
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -11,7 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 public class BlackjackView extends Application {
-
+	String css = getClass().getResource("styles.css").toExternalForm(); //since multiple scenes will be referencing from the .css file, this is left here
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		launch(args);
@@ -21,46 +19,41 @@ public class BlackjackView extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		// TODO Auto-generated method stub
-		primaryStage.setTitle("Blackjack");
+		primaryStage.setTitle("BLACKJACK");
 		//initialize features of the window
-		Button b1 = new Button("button 1");
-		Button b2 = new Button("button 2");
-		TextField t1 = new TextField("enter text here then press button 1");
-		TextField t2 = new TextField("final string goes here");
-		t2.setEditable(false); //setting t2 to not be editable
 
-		VBox v1 = new VBox(10, b1, b2);
-		HBox h1 = new HBox(10,v1, t1, t2);
+		Button start = new Button("Start");
+		Button quit = new Button("Quit");
+
+		start.getStyleClass().add("titleButtons");
+		quit.getStyleClass().add("titleButtons");
+
+		TextField title = new TextField("BLACKJACK");
+		title.setEditable(false);
+		title.getStyleClass().add("title");
+		title.setFocusTraversable(false);
+
+		VBox v1 = new VBox(20, title, start, quit);
+		HBox h1 = new HBox(10, v1);
 
 		v1.setAlignment(Pos.CENTER);
 		h1.setAlignment(Pos.CENTER);
 		//setting font and font size
-		h1.setStyle("-fx-font-family: 'Comic Sans MS', 24");
+		h1.setStyle("-fx-font-family: 'Comic Sans MS'");
 		
 		BorderPane pane = new BorderPane();
 		pane.setCenter(h1);
-		//button 1 utilizing an anonymous class
-		b1.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent actionEvent) {
-				t2.setText(t1.getText() + " : from the center text field!");
-				b1.setText("pressed");
-				b1.setDisable(true);
-
-			}
-		});
-		//button 2 utilizing a lambda expression
-		b2.setOnAction(e->{
-			t1.clear();
-			t2.clear();
-			t2.setText("final string goes here");
-			b1.setText("button 1");
-			b1.setDisable(false);
-		});
 				
-		Scene scene = new Scene(pane, 700,500);
+		Scene scene = new Scene(pane, 900,700);
+		scene.getRoot().getStyleClass().add("background");
+		scene.getStylesheets().add(css);
+
 		primaryStage.setScene(scene);
 		primaryStage.show();
+
+		quit.setOnAction(e->{
+			primaryStage.close();
+		});
 	}
 
 }

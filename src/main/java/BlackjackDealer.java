@@ -2,8 +2,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class BlackjackDealer{
-    ArrayList<Card> deck; //where all the cards will be, index 0 being the top of the deck, and the last index being the bottom of the deck
+    private ArrayList<Card> deck; //where all the cards will be, index 0 being the top of the deck, and the last index being the bottom of the deck
+    public BlackjackDealer(){ //constructor for BlackjackDealer - generates the deck and shuffles it
+        generateDeck();
+        shuffleDeck();
+    }
     public void generateDeck() {
+        if(deck != null) { //resets the current deck and regenerates it
+            deck.clear();
+        }
         deck = new ArrayList<>();
 
         String[] suits = {"Hearts", "Diamonds", "Clubs", "Spades"};
