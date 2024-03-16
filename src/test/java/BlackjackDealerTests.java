@@ -1,7 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 
 /*
@@ -14,18 +12,32 @@ class BlackjackDealer
 */
 class BlackjackDealerTests {
 	//Testing Suite for the BlackjackDealer class
-	//------TESTS FOR generateDeck() and deskSize()------
+	//------TESTS FOR generateDeck(), shuffleDeck(), and deskSize()------
 	@Test
-	void initializeDealerTest() {
+	void initializeDealer() {
 		BlackjackDealer dealer = new BlackjackDealer();
+		assertNotNull(dealer, "BlackjackDealer: Incorrect behavior when creating BlackjackDealer Object");
+	}
+	@Test
+	void DealerGenerateDeck() {
+		BlackjackDealer dealer = new BlackjackDealer();
+		dealer.generateDeck();
 		assertEquals(dealer.deckSize(), 52, "BlackjackDealer: Incorrect behavior when creating BlackjackDealer Object");
 	}
-	//------END OF TESTS FOR generateDeck()------
+	@Test
+	void DealerShuffle() {
+		BlackjackDealer dealer = new BlackjackDealer();
+		dealer.shuffleDeck();
+		assertNotNull(dealer.deck, "BlackjackDealer: Incorrect behavior when shuffling deck when no deck exists");
+		assertEquals(dealer.deckSize(), 52, "BlackjackDealer: Incorrect behavior when creating BlackjackDealer Object");
+	}
+	//------END OF TESTS FOR generateDeck(), shuffleDeck(), and deskSize()------
 
 	//------TESTS FOR dealHand() AND drawOne()------
 	@Test
-	void dealHandOnlyTest() {
+	void dealHandOnly() {
 		BlackjackDealer dealer = new BlackjackDealer();
+		dealer.shuffleDeck();
 		ArrayList<Card> myCards = dealer.dealHand();
 
 		assertNotNull(myCards,"dealHand: Incorrect behavior when dealing hands, no cards being returned");
@@ -34,8 +46,9 @@ class BlackjackDealerTests {
 	}
 
 	@Test
-	void drawOneTest(){
+	void drawOne(){
 		BlackjackDealer dealer = new BlackjackDealer();
+		dealer.shuffleDeck();
 		ArrayList<Card> myCards = new ArrayList<>();
 
 		myCards.add(dealer.drawOne());
@@ -46,8 +59,9 @@ class BlackjackDealerTests {
 	}
 
 	@Test
-	void dealHandDrawOneTest(){
+	void dealHandDrawOne(){
 		BlackjackDealer dealer = new BlackjackDealer();
+		dealer.shuffleDeck();
 		ArrayList<Card> myCards = dealer.dealHand();
 		myCards.add(dealer.drawOne());
 
@@ -58,6 +72,7 @@ class BlackjackDealerTests {
 	@Test
 	void dealHandTwice(){
 		BlackjackDealer dealer = new BlackjackDealer();
+		dealer.shuffleDeck();
 		ArrayList<Card> myCards = dealer.dealHand();
 		ArrayList<Card> theirCards = dealer.dealHand();
 

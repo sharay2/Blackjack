@@ -6,7 +6,7 @@ public class Card {
         suit = theSuit;
         value = theValue;
     }
-
+    //returns the name of this specific card's image
     public String cardName(){
         return this.value + this.suit + ".jpg";
     }

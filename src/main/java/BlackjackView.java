@@ -181,7 +181,7 @@ public class BlackjackView extends Application {
 		VBox buttons = new VBox(10,hit,stand);
 		VBox nextquitbuttons = new VBox(10, next, quit);
 
-		// set styles to textfields and HBoxes/VBoxes
+		// set styles to text fields and HBoxes/VBoxes
 		dealerDeck.setAlignment(Pos.CENTER_LEFT);
 		playerDeck.setAlignment(Pos.CENTER_LEFT);
 		revealedDealerDeck.setAlignment(Pos.CENTER_LEFT);
@@ -199,9 +199,10 @@ public class BlackjackView extends Application {
 		nextquitbuttons.setAlignment(Pos.BOTTOM_LEFT);
 
 		pane.setRight(buttons);
-
+		//set up the buttons to their respective actions
 		next.setOnAction(e->{
 			try {
+				//if the player has run out of money, automatically go back to the money setup scene
 				if(game.money <= 0){
 					moneyScene(primaryStage);
 				}

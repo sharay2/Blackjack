@@ -46,7 +46,12 @@ public class BlackjackDealer{
     }
 
     public void shuffleDeck(){
-        if(deck.size() != 52){
+        //checks if deck is not initialized before shuffling
+        if(deck == null){
+            generateDeck();
+        }
+        //checks if deck does not have the correct number of cards before shuffling
+        else if(deck.size() != 52) {
             deck.clear();
             generateDeck();
         }
