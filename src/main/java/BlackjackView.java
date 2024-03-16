@@ -57,7 +57,7 @@ public class BlackjackView extends Application {
 		pane.setCenter(h1);
 		pane.setBottom(iconPane);
 
-		Scene titlescene = new Scene(pane, 900,700);
+		Scene titlescene = new Scene(pane, 700,500);
 		titlescene.getRoot().getStyleClass().add("background");
 		titlescene.getStylesheets().add(css);
 
@@ -76,7 +76,7 @@ public class BlackjackView extends Application {
 		TextField mymoney = new TextField(); // current money input
 
 		VBox game = new VBox(mymoney, entermoney);
-		mymoney.setPromptText("Enter current money");
+		mymoney.setPromptText("Enter starting money");
 
 		mymoney.setAlignment(Pos.CENTER);
 		entermoney.setAlignment(Pos.CENTER);
@@ -85,12 +85,16 @@ public class BlackjackView extends Application {
 		pane.setCenter(game);
 
 		entermoney.setOnAction(e -> {
-			money = Double.parseDouble(mymoney.getText());
-			openNewScene(primaryStage, money);
-		}
-		);
+			try {
+				money = Double.parseDouble(mymoney.getText());
+				betScene(primaryStage, money);
+			} catch (NumberFormatException ex) {
+				mymoney.clear();
+				mymoney.setPromptText("Error: enter valid starting money");
+			}
+		});
 
-		Scene newScene = new Scene(pane, 900, 700);
+		Scene newScene = new Scene(pane, 700, 500);
 		newScene.getRoot().getStyleClass().add("background");
 		newScene.getStylesheets().add(css);
 
@@ -98,7 +102,7 @@ public class BlackjackView extends Application {
 		primaryStage.setScene(newScene);
 	}
 
-	public void openNewScene(Stage primaryStage, double money) {
+	public void betScene(Stage primaryStage, double money) {
 		// Create an empty layout for the new scene
 
 		BlackjackGame game = new BlackjackGame();
@@ -110,53 +114,35 @@ public class BlackjackView extends Application {
 		textmoney.setEditable(false);
 		textmoney.getStyleClass().add("moneybox"); //begins the game when clicked
 
-
 		TextField betinput = new TextField(); // bet money input
 
 		betinput.setPromptText("Enter a bet");
 		betinput.setMaxWidth(100);
 
 		Button bet = new Button("BET");
-		Button hit = new Button("HIT");
-		Button stand = new Button("STAND");
 
-		hit.setDisable(true);
-		stand.setDisable(true);
-
-		VBox directions = new VBox(betinput, bet, hit, stand, textmoney);
+		VBox directions = new VBox(betinput, bet, textmoney);
 
 		bet.setOnAction(event -> { // bet button clicked, set bet
-			try {
-				game.currentBet = Double.parseDouble(betinput.getText()); // convert bet money input to double
-				betinput.setEditable(false);
-				bet.setDisable(true);
-				betinput.clear();
-				betinput.setPromptText("");
-				firstgame(pane, game);
-				hit.setDisable(false);
-				stand.setDisable(false);
-				hit.setOnAction(eventhit -> {
-					int i = 2;
-					while (!game.checkPlayerBust()) {
-						game.hitCard();
-						String anothercard = game.playerHand.get(i).cardName();
-						ImageView showcard = new ImageView(new Image(anothercard));
-						showcard.setPreserveRatio(true);
-						showcard.setFitWidth(100);
-						VBox board = new VBox(firstgame(pane, game));
-						HBox newboard = new HBox(board, showcard);
-						pane.setCenter(newboard);
-						BorderPane.setAlignment(newboard, Pos.CENTER);
-						i++;
-					}
-				});
-				stand.setOnAction(eventhit -> {
 
-				});
+			try {
+				double user = Double.parseDouble(betinput.getText());
+				if(user <= game.money) {
+					game.setBet(user); // convert bet money input to double
+					betinput.setEditable(false);
+					bet.setDisable(true);
+					betinput.clear();
+					betinput.setPromptText("");
+					gameScene(primaryStage, game);
+				}
+				else{
+					betinput.clear();
+					betinput.setPromptText("Error: enter valid bet");
+				}
 			}
 			catch (NumberFormatException e){
-				betinput.setText("Enter correct bet!");
-				betinput.setText("Enter correct money!");
+				betinput.clear();
+				betinput.setPromptText("Error: enter valid bet");
 			}
 		});
 
@@ -166,22 +152,11 @@ public class BlackjackView extends Application {
 		HBox directionsWrapper = new HBox(directions);
 		directionsWrapper.setPadding(new Insets(0, 20, 0, 0));
 
-		VBox.setMargin(hit, new Insets(20, 70, 20, 0)); // Insets(top, right, bottom, left)
-		VBox.setMargin(stand, new Insets(0, 70, 20, 0));
 		VBox.setMargin(bet, new Insets(0, 70, 20, 0));
-
-
-		// DISPLAY CARDS VVVV
-//		public void firstgame(){
-//
-//		}
-
-
-		// DISPLAY CARDS ^^^^
 
 		pane.setRight(directionsWrapper);
 
-		Scene newScene = new Scene(pane, 900, 700);
+		Scene newScene = new Scene(pane, 700, 500);
 		newScene.getRoot().getStyleClass().add("background");
 		newScene.getStylesheets().add(css);
 
@@ -189,45 +164,185 @@ public class BlackjackView extends Application {
 		primaryStage.setScene(newScene);
 	}
 
-	public VBox firstgame(BorderPane pane, BlackjackGame game) {
-		String firstplayercard = game.playerHand.get(0).cardName();
-		String secondplayercard = game.playerHand.get(1).cardName();
+	public void gameScene(Stage primaryStage, BlackjackGame game) {
+		BorderPane pane = new BorderPane(); // set pane
+//		playersCards(pane, game); // call first deck
+		HBox dealerDeck = dealerCards(game);
+		HBox playerDeck = playersCards(game);
+		HBox revealedDealerDeck = revealDealer(game);
+
+		dealerDeck.setAlignment(Pos.CENTER_LEFT);
+		playerDeck.setAlignment(Pos.CENTER_LEFT);
+		revealedDealerDeck.setAlignment(Pos.CENTER_LEFT);
+		//money textfield
+		TextField textmoney = new TextField(String.format("$%.2f", game.money));
+		textmoney.setEditable(false);
+		textmoney.getStyleClass().add("moneybox"); //begins the game when clicked
+		// buttons
+		Button hit = new Button("HIT");
+		Button stand = new Button("STAND");
+		Button next = new Button("NEXT");
+		Button quit = new Button("QUIT");
+
+		next.setOnAction(e->{
+			try {
+				betScene(primaryStage, game.money);
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			}
+		});
+		quit.setOnAction(e->{
+			try {
+				start(primaryStage);
+			} catch (Exception ex) {
+				throw new RuntimeException(ex);
+			}
+		});
+
+		// make buttons to vbox
+		VBox buttons = new VBox(10,hit,stand);
+		VBox nextquitbuttons = new VBox(10, next, quit);
+
+		// set alignment to buttons
+		buttons.setAlignment(Pos.CENTER_RIGHT);
+		buttons.setPadding(new Insets(30));
+		pane.setRight(buttons);
+		nextquitbuttons.setPadding(new Insets(30));
+		nextquitbuttons.setAlignment(Pos.BOTTOM_LEFT);
+
+		hit.setOnAction(eventhit -> {
+			Card newCard = game.hitCard();
+			// new game card
+
+			String newCardName = newCard.cardName();
+			ImageView newCardImage = new ImageView(new Image(newCardName));
+			newCardImage.setPreserveRatio(true);
+			newCardImage.setFitWidth(80);
+
+			playerDeck.getChildren().add(newCardImage);
+			if (game.checkPlayerBust()) {
+				hit.setDisable(true);
+				stand.setDisable(true);
+				// lost things
+				TextField lost = new TextField("PLAYER BUST");
+				lost.getStyleClass().add("winloss");
+				VBox thebox = new VBox(lost, pane.getRight());
+				pane.setRight(thebox);
+				pane.setBottom(nextquitbuttons);
+
+				hit.setDisable(true);
+				stand.setDisable(true);
+			}
+		});
+		stand.setOnAction(eventhit -> {
+			pane.setCenter(new VBox(100, revealedDealerDeck, playerDeck));
+			hit.setDisable(true);
+			stand.setDisable(true);
+			while(game.gameLogic.evaluateBankerDraw(game.bankerHand)) {
+				Card newCard = game.dealerHitCard();
+				String newCardName = newCard.cardName();
+				ImageView newCardImage = new ImageView(new Image(newCardName));
+				newCardImage.setPreserveRatio(true);
+				newCardImage.setFitWidth(80);
+
+				revealedDealerDeck.getChildren().add(newCardImage);
+			}
+			if(game.checkDealerBust()) {
+				TextField lost = new TextField("DEALER BUST");
+				lost.getStyleClass().add("winloss");
+				VBox thebox = new VBox(lost, pane.getRight());
+				pane.setRight(thebox);
+				pane.setBottom(nextquitbuttons);
+			}
+			TextField whoWon = new TextField();
+
+			double earned = game.evaluateWinnings();
+			String temp;
+
+			if (earned < 0) {
+				temp = "You lost $" + String.format("%.2f", Math.abs(earned));
+			}
+			else {
+				temp = "You won $" + String.format("%.2f", earned);
+			}
+
+			whoWon.setText(temp);
+
+			whoWon.getStyleClass().add("winloss");
+			VBox thebox = new VBox(whoWon, pane.getRight());
+			pane.setRight(thebox);
+			pane.setBottom(nextquitbuttons);
+		});
+
+		// finish up scene
+		VBox displayTable = new VBox(70,dealerDeck,playerDeck);
+		displayTable.setAlignment(Pos.CENTER);
+		pane.setCenter(displayTable);
+		pane.setTop(textmoney);
+		Scene newScene = new Scene(pane, 700, 500);
+		// add css
+		newScene.getRoot().getStyleClass().add("background");
+		newScene.getStylesheets().add(css);
+		primaryStage.setScene(newScene);
+
+		if(game.hasBlackjack()){
+			stand.fire();
+		}
+	}
+
+	public HBox dealerCards(BlackjackGame game) {
 		String firstbankercard = game.bankerHand.get(0).cardName(); // banker card
 
-		ImageView show1playercard = new ImageView(new Image(firstplayercard));
-		ImageView show2playercard = new ImageView(new Image(secondplayercard));
-		ImageView dealercardcover = new ImageView(new Image("cardcover.jpg"));
+		// images of banker cards
 		ImageView show1bankercard = new ImageView(new Image(firstbankercard));
+		ImageView dealercardcover = new ImageView(new Image("cardcover.jpg"));
 
-		show1playercard.setPreserveRatio(true);
-		show2playercard.setPreserveRatio(true);
 		dealercardcover.setPreserveRatio(true);
 		show1bankercard.setPreserveRatio(true);
 
-		dealercardcover.setFitWidth(100);
-		show1bankercard.setFitWidth(100);
-		show1playercard.setFitWidth(100);
-		show2playercard.setFitWidth(100);
+		dealercardcover.setFitWidth(80);
+		show1bankercard.setFitWidth(80);
 
-		HBox dealerCardView = new HBox(10, show1bankercard, dealercardcover);
-		HBox playerCardView = new HBox(10, show1playercard, show2playercard);
-		VBox dealerplayerView = new VBox(50, dealerCardView, playerCardView);
+		HBox dealerCardView = new HBox(5, show1bankercard, dealercardcover);
 
-		pane.setCenter(dealerplayerView);
-		BorderPane.setAlignment(dealerplayerView, Pos.CENTER);
+		return dealerCardView;
 
-		return dealerplayerView;
 	}
 
-	public void hitcard(BorderPane pane, BlackjackGame game) {
+	public HBox playersCards(BlackjackGame game) {
+		String firstplayercard = game.playerHand.get(0).cardName();
+		String secondplayercard = game.playerHand.get(1).cardName();
 
+		ImageView show1playercard = new ImageView(new Image(firstplayercard));
+		ImageView show2playercard = new ImageView(new Image(secondplayercard));
 
+		show1playercard.setPreserveRatio(true);
+		show2playercard.setPreserveRatio(true);
 
+		show1playercard.setFitWidth(80);
+		show2playercard.setFitWidth(80);
 
+		HBox playerCardView = new HBox(5, show1playercard, show2playercard);
 
+		return playerCardView;
+	}
 
+	public HBox revealDealer(BlackjackGame game) {
+		String newfirstdealercard = game.bankerHand.get(0).cardName();
+		String newseconddealercard = game.bankerHand.get(1).cardName();
 
+		ImageView show1dealercard = new ImageView(new Image(newfirstdealercard));
+		ImageView show2dealercard = new ImageView(new Image(newseconddealercard));
 
+		show1dealercard.setPreserveRatio(true);
+		show2dealercard.setPreserveRatio(true);
+
+		show1dealercard.setFitWidth(80);
+		show2dealercard.setFitWidth(80);
+
+		HBox newdealerCardView = new HBox(5, show1dealercard, show2dealercard);
+
+		return newdealerCardView;
 	}
 
 }

@@ -29,5 +29,15 @@
     -fx-border-color: transparent;
     -fx-alignment: top-left;
     -fx-text-fill: #1C0F13;
+    -fx-padding: 10px 10px 10px 10px;
     -fx-font-size: 24;
+}
+
+.winloss{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-alignment: top-right;
+    -fx-text-fill: #1C0F13;
+    -fx-font-size: 24;
+    -fx-padding: 10px 10px 0px 0px;
 }

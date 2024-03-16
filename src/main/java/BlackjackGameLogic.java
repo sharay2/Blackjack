@@ -12,7 +12,7 @@ public class BlackjackGameLogic {
             return "player";
         }
         else if(playerSum == dealerSum){
-            return "tie";
+            return "push";
         }
         else{
             return "dealer";
