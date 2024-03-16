@@ -24,6 +24,7 @@ public class BlackjackGameLogic {
         for(Card card:hand){
             if(card.value == 1){
                 numAces++;
+                total += 11;
             }
             else if(card.value>10){
                 total += 10;
@@ -33,13 +34,9 @@ public class BlackjackGameLogic {
             }
         }
         //handles the aces separately since they can have either 1 or 11
-        for(int i = 0; i < numAces; i++){
-            if(total + 11 <= 21){
-                total+=11;
-            }
-            else{
-                total++;
-            }
+        while(numAces > 0 && total > 21){
+            numAces--;
+            total-=10;
         }
         return total;
     }

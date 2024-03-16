@@ -7,14 +7,14 @@ import java.util.ArrayList;
 /*
 class BlackjackDealer
 [x] public void generateDeck() : this should generate 52 cards, one for each of 13 faces and 4 suits.
-[] public ArrayList<Card> dealHand(): this will return an Arraylist of two cards and leave the remainder of the deck able to be drawn later.
-[] public Card drawOne() : this will return the next card on top of the deck
-[] public void shuffleDeck(); : this will return all 52 cards to the deck and shuffle their order
-[] public int deckSize(); : this will return the number of cards left in the deck. After a call to shuffleDeck() this should be 52.
+[x] public ArrayList<Card> dealHand(): this will return an Arraylist of two cards and leave the remainder of the deck able to be drawn later.
+[x] public Card drawOne() : this will return the next card on top of the deck
+[x] public void shuffleDeck(); : this will return all 52 cards to the deck and shuffle their order
+[x] public int deckSize(); : this will return the number of cards left in the deck. After a call to shuffleDeck() this should be 52.
 */
 class BlackjackDealerTests {
 	//Testing Suite for the BlackjackDealer class
-	//------TESTS FOR generateDeck()------
+	//------TESTS FOR generateDeck() and deskSize()------
 	@Test
 	void initializeDealerTest() {
 		BlackjackDealer dealer = new BlackjackDealer();

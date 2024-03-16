@@ -3,10 +3,7 @@ import java.util.Collections;
 
 public class BlackjackDealer{
     public ArrayList<Card> deck; //where all the cards will be, index 0 being the top of the deck, and the last index being the bottom of the deck
-    public BlackjackDealer(){ //constructor for BlackjackDealer - generates the deck and shuffles it
-        generateDeck();
-        shuffleDeck();
-    }
+
     public void generateDeck() {
         if(deck != null) { //resets the current deck and regenerates it
             deck.clear();
@@ -49,6 +46,10 @@ public class BlackjackDealer{
     }
 
     public void shuffleDeck(){
+        if(deck.size() != 52){
+            deck.clear();
+            generateDeck();
+        }
         Collections.shuffle(deck); //uses Collections.shuffle to randomize the deck
     }
 
