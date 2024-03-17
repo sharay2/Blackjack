@@ -24,6 +24,7 @@ public class BlackJackGameTest {
         game.evaluateWinnings();
         assertEquals(500, game.money);
     }
+
     @Test
     void evaluatePlayerWin() {
         BlackjackGame game = new BlackjackGame();
@@ -40,6 +41,7 @@ public class BlackJackGameTest {
         game.evaluateWinnings();
         assertEquals(700, game.money);
     }
+
     @Test
     void evalutePlayerBlackJack() {
         BlackjackGame game = new BlackjackGame();
@@ -116,7 +118,7 @@ public class BlackJackGameTest {
         game.money = 500;
         game.setBet(200);
         assertEquals(game.money, 300, "Money not updated correctly when bet set");
-        assertEquals(game.currentBet, 200, "Current bet not equal to bet set");
+        assertEquals(game.currentBet, 200, "Current bet not set");
     }
 
     // Test for testing player/dealer when hit blackjack
