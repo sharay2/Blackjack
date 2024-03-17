@@ -76,19 +76,26 @@ public class BlackJackGameTest {
         assertEquals(300, game.money);
     }
 
-    // Check for hitCard()
+    // Check for hit card with dealer and player
+    @Test
+    void testHitCard() {
+        BlackjackGame game = new BlackjackGame();
+        game.theDealer.generateDeck();
+        game.hitCard();
+        assertEquals(game.playerHand.size(), 1);
+    }
 
-    // VVVV check hit card
-//    @Test
-//    void checkHitCard() {
-//        BlackjackGame game = new BlackjackGame();
-//        game.hitCard();
-//        assertEquals(game.playerHand.size(), 1);
-//    }
+    @Test
+    void testDealerHitCard() {
+        BlackjackGame game = new BlackjackGame();
+        game.theDealer.generateDeck();
+        game.dealerHitCard();
+        assertEquals(game.bankerHand.size(), 1);
+    }
 
     // Tests for player or dealer bust
     @Test
-    void checkPlayerBust() {
+    void testPlayerBust() {
         BlackjackGame game = new BlackjackGame();
         Card playercard1 = new Card("spades", 9);
         Card playercard2 = new Card("clubs", 7);
@@ -100,7 +107,7 @@ public class BlackJackGameTest {
     }
 
     @Test
-    void checkDealerBust() {
+    void testDealerBust() {
         BlackjackGame game = new BlackjackGame();
         Card bankercard1 = new Card("spades", 9);
         Card bankercard2 = new Card("clubs", 7);
