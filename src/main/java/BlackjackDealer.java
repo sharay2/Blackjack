@@ -21,7 +21,7 @@ public class BlackjackDealer{
     }
 
     public ArrayList<Card> dealHand(){
-        if(deck.isEmpty()){ //making sure that the deck was generated correctly before dealing hands
+        if(deck == null || deck.isEmpty()){ //making sure that the deck was generated correctly before dealing hands
             generateDeck();
         }
 
@@ -36,7 +36,7 @@ public class BlackjackDealer{
     }
 
     public Card drawOne(){
-        if(deck.isEmpty()){ //making sure that the deck was generated correctly before drawing one card
+        if(deck == null || deck.isEmpty()){ //making sure that the deck was generated correctly before drawing one card
             generateDeck();
         }
 

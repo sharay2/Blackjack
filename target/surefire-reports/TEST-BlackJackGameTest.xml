@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="BlackjackDealerTests" time="0.039" tests="7" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="BlackJackGameTest" time="0.021" tests="10" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="21"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -59,11 +59,14 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="65.0"/>
   </properties>
-  <testcase name="dealHandOnly" classname="BlackjackDealerTests" time="0.024"/>
-  <testcase name="initializeDealer" classname="BlackjackDealerTests" time="0"/>
-  <testcase name="dealHandTwice" classname="BlackjackDealerTests" time="0.001"/>
-  <testcase name="DealerGenerateDeck" classname="BlackjackDealerTests" time="0.001"/>
-  <testcase name="dealHandDrawOne" classname="BlackjackDealerTests" time="0"/>
-  <testcase name="drawOne" classname="BlackjackDealerTests" time="0"/>
-  <testcase name="DealerShuffle" classname="BlackjackDealerTests" time="0.001"/>
+  <testcase name="checkDealerBust" classname="BlackJackGameTest" time="0"/>
+  <testcase name="checkPlayerBust" classname="BlackJackGameTest" time="0.002"/>
+  <testcase name="testPlayerBlackJack" classname="BlackJackGameTest" time="0.002"/>
+  <testcase name="evaluatePlayerWin" classname="BlackJackGameTest" time="0.001"/>
+  <testcase name="evaluateDealerWin" classname="BlackJackGameTest" time="0.001"/>
+  <testcase name="evaluateDraw" classname="BlackJackGameTest" time="0.002"/>
+  <testcase name="testDealerBlackJack" classname="BlackJackGameTest" time="0.001"/>
+  <testcase name="testSetBet" classname="BlackJackGameTest" time="0.002"/>
+  <testcase name="evalutePlayerBlackJack" classname="BlackJackGameTest" time="0.002"/>
+  <testcase name="testNewRound" classname="BlackJackGameTest" time="0.002"/>
 </testsuite>
