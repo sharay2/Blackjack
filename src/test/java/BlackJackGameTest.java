@@ -22,7 +22,7 @@ public class BlackJackGameTest {
         game.money = 500;
         game.setBet(200);
         game.evaluateWinnings();
-        assertEquals(500, game.money);
+        assertEquals(500, game.money, "Draw evaluated winnings incorrect");
     }
 
     @Test
@@ -39,7 +39,7 @@ public class BlackJackGameTest {
         game.money = 500; //300
         game.setBet(200);
         game.evaluateWinnings();
-        assertEquals(700, game.money);
+        assertEquals(700, game.money, "Player win evaluated winnings incorrect");
     }
 
     @Test
@@ -56,7 +56,7 @@ public class BlackJackGameTest {
         game.bankerHand.add(bankercard1);
         game.bankerHand.add(bankercard2);
         game.evaluateWinnings();
-        assertEquals(800, game.money);
+        assertEquals(800, game.money, "Player blackjack evaluated winnings incorrect");
     }
 
     @Test
@@ -73,7 +73,7 @@ public class BlackJackGameTest {
         game.money = 500; //300
         game.setBet(200);
         game.evaluateWinnings();
-        assertEquals(300, game.money);
+        assertEquals(300, game.money, "Dealer win evaluated winnings incorrect");
     }
 
     // Check for hit card with dealer and player
@@ -82,7 +82,7 @@ public class BlackJackGameTest {
         BlackjackGame game = new BlackjackGame();
         game.theDealer.generateDeck();
         game.hitCard();
-        assertEquals(game.playerHand.size(), 1);
+        assertEquals(game.playerHand.size(), 1, "hitCard() expected to update playerHand");
     }
 
     @Test
@@ -90,7 +90,7 @@ public class BlackJackGameTest {
         BlackjackGame game = new BlackjackGame();
         game.theDealer.generateDeck();
         game.dealerHitCard();
-        assertEquals(game.bankerHand.size(), 1);
+        assertEquals(game.bankerHand.size(), 1, "dealerHitCard() expected to update bankerHand");
     }
 
     // Tests for player or dealer bust
@@ -103,7 +103,7 @@ public class BlackJackGameTest {
         game.playerHand.add(playercard1);
         game.playerHand.add(playercard2);
         game.playerHand.add(playercard3);
-        assertTrue(game.checkPlayerBust(), "PLAYER BUST NOT TRUE");
+        assertTrue(game.checkPlayerBust(), "Player expected to bust");
     }
 
     @Test
@@ -115,7 +115,7 @@ public class BlackJackGameTest {
         game.bankerHand.add(bankercard1);
         game.bankerHand.add(bankercard2);
         game.bankerHand.add(bankercard3);
-        assertTrue(game.checkDealerBust(), "DEALER BUST NOT TRUE");
+        assertTrue(game.checkDealerBust(), "Dealer expected to bust");
     }
 
     // setBet() test
@@ -136,7 +136,7 @@ public class BlackJackGameTest {
         Card playercard2 = new Card("clubs", 10);
         game.playerHand.add(playercard1);
         game.playerHand.add(playercard2);
-        assertTrue(game.playerHasBlackjack(), "PLAYER BLACKJACK NOT TRUE");
+        assertTrue(game.playerHasBlackjack(), "Player expected to hit blackjack");
     }
 
     @Test
@@ -146,7 +146,7 @@ public class BlackJackGameTest {
         Card bankercard2 = new Card("hearts", 10);
         game.bankerHand.add(bankercard1);
         game.bankerHand.add(bankercard2);
-        assertTrue(game.dealerHasBlackjack(), "DEALER BLACKJACK NOT TRUE");
+        assertTrue(game.dealerHasBlackjack(), "Dealer expected to hit blackjack");
     }
 
     // Test new round and see if old hand is different than new hand
