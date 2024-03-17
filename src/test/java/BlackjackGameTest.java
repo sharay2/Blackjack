@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class BlackJackGameTest {
+public class BlackjackGameTest {
 
     //------TESTS FOR GAME------
     // Test for evaluating money winnings
@@ -43,7 +43,7 @@ public class BlackJackGameTest {
     }
 
     @Test
-    void evalutePlayerBlackJack() {
+    void evalutePlayerBlackjack() {
         BlackjackGame game = new BlackjackGame();
         Card playercard1 = new Card("spades", 1);
         Card playercard2 = new Card("clubs", 10);
@@ -130,7 +130,7 @@ public class BlackJackGameTest {
 
     // Test for testing player/dealer when hit blackjack
     @Test
-    void testPlayerBlackJack() {
+    void testPlayerBlackjack() {
         BlackjackGame game = new BlackjackGame();
         Card playercard1 = new Card("spades", 1);
         Card playercard2 = new Card("clubs", 10);
@@ -140,7 +140,7 @@ public class BlackJackGameTest {
     }
 
     @Test
-    void testDealerBlackJack() {
+    void testDealerBlackjack() {
         BlackjackGame game = new BlackjackGame();
         Card bankercard1 = new Card("spades", 1);
         Card bankercard2 = new Card("hearts", 10);
